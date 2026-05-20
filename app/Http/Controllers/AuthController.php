@@ -41,7 +41,7 @@ class AuthController extends Controller
             'lastname' => $request->lastname,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role_id' => RolEnum::CLIENTE->value, // client por defecto
+            'rol_id' => RolEnum::CLIENTE->value, // client por defecto
         ]);
 
         return response()->json([
@@ -52,7 +52,9 @@ class AuthController extends Controller
     // PERFIL
     public function me()
     {
-        return response()->json(auth()->user());
+        return response()->json([
+            'user' => auth()->user()->load('role')
+        ]);
     }
 
     // LOGOUT
@@ -71,12 +73,12 @@ class AuthController extends Controller
     // RESPUESTA TOKEN
     protected function respondWithToken($token)
     {
-        $user = auth()->user(); // ya autenticado correctamente
+        $user = auth()->user()->load('role'); // ya autenticado correctamente
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
             'expires_in' => auth()->factory()->getTTL() * 60,
-            'user' => $user
+            'user' => $user // cargar relación de rol para incluirla en la respuesta
         ]);
     }
 }

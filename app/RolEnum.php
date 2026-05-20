@@ -4,7 +4,7 @@ namespace App;
 
 enum RolEnum : int
 {
-    case ADMINISTRADOR = 1;
-    case CLIENTE = 2;
+    case ADMINISTRADOR = 2;
+    case CLIENTE = 1;
 }
 
