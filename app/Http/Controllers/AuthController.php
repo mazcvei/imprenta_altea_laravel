@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\RolEnum;
+use App\Http\Requests\RegisterRequest;
 use Illuminate\Container\Attributes\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -25,23 +26,17 @@ class AuthController extends Controller
     }
 
     // REGISTER
-    public function register(Request $request)
+    public function register(RegisterRequest $request)
     {
-   
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'lastname' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
-        ]);
-    
+        $validatedData = $request->validated();
 
-        $user = User::create([
-            'name' => $request->name,
-            'lastname' => $request->lastname,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'rol_id' => RolEnum::CLIENTE->value, // client por defecto
+        User::create([
+            'name' => $validatedData['name'],
+            'lastname1' => $validatedData['lastname1'],
+            'lastname2' => $validatedData['lastname2'],
+            'email' => $validatedData['email'],
+            'password' => Hash::make($validatedData['password']),
+            'role_id' => RolEnum::CLIENTE->value, // client por defecto
         ]);
 
         return response()->json([

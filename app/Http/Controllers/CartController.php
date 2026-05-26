@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreCartRequest;
 use App\Models\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class CartController extends Controller
 {
@@ -25,14 +27,17 @@ class CartController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreCartRequest $request)
     {
-        $request->validate([
-            'product_id' => 'required|exists:products,id',
-            'price_unit_id' => 'required|exists:product_prices_units,id',
-        ]);
-
         $user = auth()->user();
+        $imagePath = null;
+
+        if ($request->hasFile('image')) {
+
+            $imagePath = $request
+                ->file('image')
+                ->store('cart-images', 'public');
+        }
 
         $cartItem = Cart::updateOrCreate(
             [
@@ -40,7 +45,9 @@ class CartController extends Controller
                 'product_id' => $request->product_id,
                 'price_unit_id' => $request->price_unit_id,
             ],
-            []
+            [
+                'image' => $imagePath
+            ]
         );
 
         return response()->json([
@@ -63,9 +70,14 @@ class CartController extends Controller
         $item = Cart::where('user_id', auth()->id())
             ->where('id', $id)
             ->firstOrFail();
-            
+
         if(!$item) {
             return response()->json(['message' => 'Item no encontrado'], 404);
+        }
+
+        $filePath = $item->image;
+        if ($filePath && Storage::disk('public')->exists($filePath)) {
+            Storage::disk('public')->delete($filePath);
         }
 
         $item->delete();

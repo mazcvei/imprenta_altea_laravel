@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\StripeController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 
@@ -26,9 +27,19 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/cart/count', [CartController::class, 'count']);
 
     Route::post('/stripe/create-checkout-session', [StripeController::class, 'createCheckoutSession']);
+
+    Route::get('/orders/auth', [OrderController::class, 'authIndex']);
+        
     Route::middleware('role:admin')->group(function () {
 
         Route::get('/admin/users', [AdminController::class, 'users']);
+        Route::post('/products', [ProductController::class, 'store']);
+        Route::put('/products/{product}', [ProductController::class, 'update']);
+        Route::delete('/products/{product}', [ProductController::class, 'destroy']);
+
+        Route::get('/orders', [OrderController::class, 'index']);
+        Route::put('/orders/{order}/status', [OrderController::class, 'updateStatus']);
+        Route::delete('/orders/{order}', [OrderController::class, 'destroy']);
 
     });
 });
