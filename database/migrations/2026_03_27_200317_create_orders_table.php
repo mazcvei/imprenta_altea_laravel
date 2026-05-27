@@ -18,8 +18,6 @@ return new class extends Migration
             $table->enum('status', [OrderStatusEnum::Pendiente->value, OrderStatusEnum::Procesando->value, OrderStatusEnum::Completado->value, OrderStatusEnum::Cancelado->value])->default(OrderStatusEnum::Pendiente->value);
             $table->decimal('total', 10, 2)->default(0);
             $table->string('payment_method')->nullable();
-            $table->string('shipping_address')->nullable();
-            $table->string('billing_number')->nullable();
             $table->timestamps();
         });
     }

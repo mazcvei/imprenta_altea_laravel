@@ -9,6 +9,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserController;
 
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
@@ -29,10 +30,11 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/stripe/create-checkout-session', [StripeController::class, 'createCheckoutSession']);
 
     Route::get('/orders/auth', [OrderController::class, 'authIndex']);
+    Route::get('/orders/{order}', [OrderController::class, 'show']);
         
     Route::middleware('role:admin')->group(function () {
 
-        Route::get('/admin/users', [AdminController::class, 'users']);
+        Route::get('/users', [UserController::class, 'index']);
         Route::post('/products', [ProductController::class, 'store']);
         Route::put('/products/{product}', [ProductController::class, 'update']);
         Route::delete('/products/{product}', [ProductController::class, 'destroy']);

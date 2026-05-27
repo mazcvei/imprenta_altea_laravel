@@ -19,7 +19,7 @@ class UserSeeder extends Seeder
             'lastname2' => 'User',
             'email' => 'admin@admin.com',
             'password' => bcrypt('password'),
-            'role_id' => \App\RolEnum::ADMINISTRADOR->value,
+            'role_id' => \App\RolEnum::admin->value,
         ]);
 
         // Crear un usuario cliente
@@ -29,7 +29,7 @@ class UserSeeder extends Seeder
             'lastname2' => 'User',
             'email' => 'client@client.com',
             'password' => bcrypt('password'),
-            'role_id' => \App\RolEnum::CLIENTE->value,
+            'role_id' => \App\RolEnum::cliente->value,
         ]);
     }
 }

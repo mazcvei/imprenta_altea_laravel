@@ -17,6 +17,7 @@ class ProductSeeder extends Seeder
         $tarjetas = Product::create([
             'name' => 'TARJETAS DE VISITA',
             'description' => 'Impresas a color 2 caras en cartulina couche de 350 grs.',
+            'image'=>'products/6a15da6e981f6_tarjetas.png',
         ]);
 
         ProductPriceUnit::insert([
@@ -56,6 +57,7 @@ class ProductSeeder extends Seeder
         $sobres = Product::create([
             'name' => 'SOBRES AMERICANO',
             'description' => 'Impresión 1 tinta 1 cara. Medida 115x225 mm. Blanco 90 grs. Tira silicona para cierre.',
+              'image'=>'products/6a15da7da9bc8_sobres.png',
         ]);
 
         ProductPriceUnit::insert([
@@ -95,6 +97,7 @@ class ProductSeeder extends Seeder
         $carpetas = Product::create([
             'name' => 'CARPETAS',
             'description' => 'Impresión a color 1 cara. Medida 310x440 mm abierta. Cartulina couche de 350 grs. Hendido central.',
+                'image'=>'products/6a15da8d26016_carpetas.png',
         ]);
 
         ProductPriceUnit::insert([
@@ -127,6 +130,7 @@ class ProductSeeder extends Seeder
         $folios = Product::create([
             'name' => 'FOLIOS',
             'description' => 'Impresión a color 1 cara. Medida 210x297 mm. Papel offset 90grs.',
+            'image'=>'products/6a15dad4ace49_folios.png',
         ]);
 
         ProductPriceUnit::insert([
@@ -159,6 +163,7 @@ class ProductSeeder extends Seeder
         $flyers = Product::create([
             'name' => 'FLYERS',
             'description' => 'Impresión a color 2 caras. Medida 150x210mm. Papel couche de 150 grs.',
+            'image'=>'products/6a15daf08a1ea_flayers.png',
         ]);
 
         ProductPriceUnit::insert([

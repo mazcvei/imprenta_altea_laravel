@@ -12,9 +12,6 @@ class Order extends Model
         'status',
         'total',
         'payment_method',
-        'shipping_address',
-        'billing_number',
-        'session_id',
     ];
 
     public function user() {
@@ -23,6 +20,10 @@ class Order extends Model
 
     public function items() {
         return $this->hasMany(OrderItem::class);
+    }
+    
+    public function address() {
+        return $this->hasOne(AddressOrder::class);
     }
 
 }
